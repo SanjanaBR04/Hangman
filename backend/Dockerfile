@@ -8,8 +8,9 @@ WORKDIR /app
 COPY . .
 
 # Build the C++ server
-RUN g++ -std=c++17 -pthread *.cpp -o server
+RUN g++ -std=c++17 -pthread hangman.cpp -o server
 
 # Run the server
 CMD ["./server"]
+
 
