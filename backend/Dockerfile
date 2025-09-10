@@ -1,16 +1,12 @@
-# Use GCC image
 FROM gcc:13
 
-# Set working directory
 WORKDIR /app
 
-# Copy source code
-COPY . .
+# Copy backend folder
+COPY backend/ ./backend/
 
-# Build the C++ server
-RUN g++ -std=c++17 -pthread hangman.cpp -o server
+# Compile hangman.cpp
+RUN g++ -std=c++17 -pthread backend/hangman.cpp -o server
 
-# Run the server
+EXPOSE 8080
 CMD ["./server"]
-
-
