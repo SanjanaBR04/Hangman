@@ -24,7 +24,7 @@ void startGame() {
     srand(time(0));
     game.word = words[rand() % words.size()];
     game.display = string(game.word.size(), '_');
-    game.lives = 5;
+    game.lives = 6;
     game.guessed.clear();
 
     int lettersToReveal = 2 + rand() % 2;
@@ -107,5 +107,6 @@ int main() {
     cout << "Server running on http://0.0.0.0:" << port << "\n";
     svr.listen("0.0.0.0", port);
 }
+
 
 
