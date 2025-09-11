@@ -1,16 +1,19 @@
 # Use GCC image
 FROM gcc:13
 
-# Set working directory
+# Set working directory inside container
 WORKDIR /app
 
-# Copy all files from current folder (backend/)
+# Copy everything from backend/ into container
 COPY . .
 
-# Compile hangman.cpp (which has main())
-RUN g++ -std=c++17 -pthread hangman.cpp -o server
+# Debug step: show files (to confirm hangman.cpp exists inside container)
+RUN ls -l
 
-# Expose port
+# Compile all cpp files (safe even if you add more later)
+RUN g++ -std=c++17 -pthread *.cpp -o server
+
+# Expose server port
 EXPOSE 8080
 
 # Run the server
