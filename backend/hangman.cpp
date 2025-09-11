@@ -15,6 +15,7 @@ struct Game {
     string display;
     int lives;
     unordered_set<char> guessed;
+    unordered_set<char> revealedAtStart; // ✅ New
 };
 
 vector<string> words = {"pthinks", "computer", "science", "hangman", "programming"};
@@ -26,12 +27,13 @@ void startGame() {
     game.display = string(game.word.size(), '_');
     game.lives = 6;
     game.guessed.clear();
+    game.revealedAtStart.clear(); // ✅ Clear revealed letters
 
     int lettersToReveal = 2 + rand() % 2;
-    for(int i=0; i<lettersToReveal; i++) {
+    for (int i = 0; i < lettersToReveal; i++) {
         int pos = rand() % game.word.size();
         game.display[pos] = game.word[pos];
-        game.guessed.insert(game.word[pos]);
+        game.revealedAtStart.insert(game.word[pos]); // ✅ Store revealed letters separately
     }
 }
 
@@ -39,23 +41,26 @@ json guessLetter(char guess) {
     guess = tolower(guess);
     json response;
 
-    if(game.guessed.count(guess)) {
+    if (game.guessed.count(guess)) {
         response["message"] = "Already guessed";
         response["display"] = game.display;
         response["lives"] = game.lives;
+        response["gameOver"] = (game.lives <= 0 || game.display == game.word);
+        response["word"] = (game.lives <= 0) ? game.word : "";
         return response;
     }
 
-    game.guessed.insert(guess);
+    game.guessed.insert(guess); // ✅ Only mark as guessed now
+
     bool correct = false;
-    for(int i=0; i<game.word.size(); i++) {
-        if(game.word[i] == guess) {
+    for (int i = 0; i < game.word.size(); i++) {
+        if (game.word[i] == guess) {
             game.display[i] = guess;
             correct = true;
         }
     }
 
-    if(correct) {
+    if (correct) {
         response["message"] = "Correct guess!";
     } else {
         game.lives--;
@@ -107,6 +112,3 @@ int main() {
     cout << "Server running on http://0.0.0.0:" << port << "\n";
     svr.listen("0.0.0.0", port);
 }
-
-
-
