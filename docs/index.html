@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hangman Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="game-container">
+    <h1>🎯 Hangman Challenge</h1>
+
+    <div id="hangman-drawing" class="drawing"></div>
+
+    <div id="word-display" class="word-display">_ _ _ _ _</div>
+
+    <div class="info">
+      <p>❤️ Lives left: <span id="lives-count">5</span></p>
+      <p id="message" class="message">Pick a letter!</p>
+    </div>
+
+    <div id="keyboard" class="keyboard"></div>
+
+    <button id="restart-button" class="restart">🔄 Restart Game</button>
+  </div>
+
+  <footer>
+    <p>Made with ❤️ using C++ & JS</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
