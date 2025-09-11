@@ -48,9 +48,8 @@ const hangmanStages = [
           |
     =========`
 ];
-
 function startGame() {
-    fetch('http://https://hangman-lt7u.onrender.com/start', {
+    fetch('https://hangman-lt7u.onrender.com/start', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })
@@ -84,7 +83,7 @@ function createKeyboard() {
 }
 
 function handleGuess(letter) {
-    fetch('http://https://hangman-lt7u.onrender.com/guess', {
+    fetch('https://hangman-lt7u.onrender.com/guess', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ letter: letter.toLowerCase() })
@@ -197,4 +196,5 @@ function disableKeyboard() {
 document.getElementById('restart-button').addEventListener('click', startGame);
 
 startGame();
+
 
