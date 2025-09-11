@@ -46,6 +46,14 @@ const hangmanStages = [
      /|\\  |
      /    |
           |
+    =========`,
+    `
+      +---+
+      |   |
+      O   |
+     /|\\  |
+     / \\  |
+          |
     =========`
 ];
 
@@ -136,4 +144,5 @@ document.getElementById('restart-button').addEventListener('click', startGame);
 
 // Start the game when the page loads
 startGame();
+
 
