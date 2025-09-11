@@ -106,7 +106,7 @@ function handleGuess(letter) {
         .then(data => {
             document.getElementById('word-display').textContent = data.display.split('').join(' ');
             document.getElementById('lives-count').textContent = data.lives;
-            document.getElementById('hangman-drawing').textContent = hangmanStages[5 - data.lives];
+            document.getElementById('hangman-drawing').textContent = hangmanStages[6 - data.lives];
 
             document.getElementById('message').textContent = data.message === 'Correct guess!'
                 ? `Yay! "${letter}" is in the word!`
@@ -144,5 +144,6 @@ document.getElementById('restart-button').addEventListener('click', startGame);
 
 // Start the game when the page loads
 startGame();
+
 
 
