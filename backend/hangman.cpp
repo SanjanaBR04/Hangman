@@ -73,38 +73,39 @@ json guessLetter(char guess) {
 int main() {
     httplib::Server svr;
 
-    svr.set_default_headers({
-        {"Access-Control-Allow-Origin", "*"},
-        {"Access-Control-Allow-Methods", "GET, POST, OPTIONS"},
-        {"Access-Control-Allow-Headers", "Content-Type"}
-    });
-
-    // ✅ Handle OPTIONS (preflight) requests
+    // ✅ Handle OPTIONS preflight for all routes
     svr.Options(".*", [](const httplib::Request&, httplib::Response& res) {
         res.set_header("Access-Control-Allow-Origin", "*");
         res.set_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
         res.set_header("Access-Control-Allow-Headers", "Content-Type");
         res.status = 200;
     });
-    
+
+    // ✅ GET /start
     svr.Get("/start", [](const httplib::Request&, httplib::Response& res) {
         startGame();
         json j;
         j["display"] = game.display;
         j["lives"] = game.lives;
+        res.set_header("Access-Control-Allow-Origin", "*");
         res.set_content(j.dump(), "application/json");
     });
 
+    // ✅ POST /guess
     svr.Post("/guess", [](const httplib::Request& req, httplib::Response& res) {
         auto j = json::parse(req.body);
         char g = j["letter"].get<string>()[0];
         json response = guessLetter(g);
+        res.set_header("Access-Control-Allow-Origin", "*");
         res.set_content(response.dump(), "application/json");
     });
 
+    // ✅ Dynamic port for Render
     const char* port_str = std::getenv("PORT");
     int port = port_str ? std::stoi(port_str) : 8080;
 
     cout << "Server running on http://0.0.0.0:" << port << "\n";
     svr.listen("0.0.0.0", port);
 }
+
+
